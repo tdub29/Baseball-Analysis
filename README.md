@@ -12,7 +12,8 @@ Self-directed project attempting to develop predictive model for MLB games. Ques
 ![Rplot](https://user-images.githubusercontent.com/108891102/213932953-444e4d2e-bd8d-4be2-8596-90fc2b1d9cf8.png)
 
 <img width="269" alt="Screenshot 2023-01-23 172706" src="https://user-images.githubusercontent.com/108891102/214164292-3fd4cfab-cc37-4d82-a224-25450d8409eb.png">
-This image illustrates the effectiveness of the expected win percentage metric developed
+This image illustrates the effectiveness of the expected win percentage metric developed showing the actual win percentage of teams at certain expected win percentage thresholds
+
 
 
 I am continuously working on this project so check back for updates and further analysis!
