@@ -4,7 +4,7 @@ Self-directed project attempting to develop predictive model for MLB games. Ques
 
 One major roadblock which persisted throughout this project was the inability to loop through the bref_daily_batter/pitcher function. I believe there is a limit on the number of times the function can be used to scrape the data from baseball reference in a certain time frame allthough there is no mention of this on the developer page. As a result I was forced to manually run the string of code for each day of 3 seasons in order to amass the data desired.
 
-
+Below are various graphs illustrating the relationship between different predictive metrics developed and actual score
 ![Rplotexscore](https://user-images.githubusercontent.com/108891102/213932899-a1339103-97ec-4635-b7af-a81d39bb05e8.png)
 
 ![Rplotexpected_score](https://user-images.githubusercontent.com/108891102/213932931-dfde9280-2dda-40ac-b138-0fb7d4ecac68.png)
