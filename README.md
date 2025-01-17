@@ -1,4 +1,4 @@
-# Baseball-Analysis
+# Baseball-Analysis from '23
 Self-directed project attempting to develop predictive model for MLB games.
 
 As I look at this two years later I realize I hardly got to the predictive side of things and it was mainly an effort of data ingestion. Understand this is intended to reflect my passion and roots in baseball data!
