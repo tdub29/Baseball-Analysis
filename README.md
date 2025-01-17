@@ -16,6 +16,7 @@ Below is a simplified, nontechnical summary of what the script does:
 
 
 **Collect Game Schedules**  ---- the part that took most of my time lol
+
 The script starts by choosing a baseball season (for example, 2016) and uses a library to look up the official start and end dates of that regular season. It then goes through every date in that season to pull a list of games that happened on each day.
 
 
