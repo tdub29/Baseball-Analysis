@@ -14,26 +14,40 @@ Coming back to this 2 years later --- in my defense my analytics professor could
 
 Below is a simplified, nontechnical summary of what the script does:
 
+
 **Collect Game Schedules**  ---- the part that took most of my time lol
 The script starts by choosing a baseball season (for example, 2016) and uses a library to look up the official start and end dates of that regular season. It then goes through every date in that season to pull a list of games that happened on each day.
 
+
 **Gather Daily Game Data**
+
 For each day, the script fetches information about the matchups—like which teams played, what the game identifier was, and other game details. It combines all of this into one master table so there is a single record for each game of the season.
 
+
 **Add Player Statistics**
+
 Once the list of games is ready, the code brings in hitting and pitching stats for players on each team. It totals things like hits, runs, walks, or strikeouts and sums them up by team for each day, then joins these stats back to the game records.
 
+
 **Calculate Advanced Metrics**
+
 Using the hitting and pitching stats, the script calculates more advanced baseball statistics (e.g., weighted On-Base Average or “wOBA,” Fielding Independent Pitching or “FIP,” slugging percentage, etc.).
 
+
 **Create Predictions**
+
 Based on these stats, the code builds formulas to estimate how many runs a team might score (referred to as “expected score”). It also looks at the likelihood of winning for each team, using historical data to see how often teams with similar “expected score” or run-differences ended up winning.
 
+
 **Refine the Predictions**
+
 The script then adjusts or “regresses” these predictions back toward the overall league average in cases where the data sample is very small or looks unreliable. That helps avoid extremes when there’s not enough information.
 
+
 **Compare and Analyze**
+
 Finally, the script compares its predictions to actual outcomes—such as actual runs scored or who won—and logs how accurate these metrics and models are. It creates charts and calculates correlations to see how close the predictions match reality.
+
 
 Overall, this code automates gathering baseball game data, links it with player stats, calculates performance metrics, and tries to predict how many runs teams will score and how likely they are to win, all while refining those predictions based on historical patterns.
 
