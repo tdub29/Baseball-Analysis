@@ -1,6 +1,11 @@
 library(baseballr)
-
 library(dplyr)
+
+data_dir <- "data"
+raw_dir <- file.path(data_dir, "raw")
+interim_dir <- file.path(data_dir, "interim")
+processed_dir <- file.path(data_dir, "processed")
+metrics_dir <- file.path(data_dir, "metrics")
 
 currentyearcreating<- 2015
 endyear <-2019
@@ -311,23 +316,21 @@ NEW <- filter(NEW, game_pk != 1)
 
 
 
-write.csv(baseball, file = "C:\\Users\\TrevorWhite\\Downloads\\yearsBaseball.csv")
-
-write.csv(baseballcorr, file = "C:\\Users\\TrevorWhite\\Downloads\\Baseballcors.csv")
-
-write.csv(df, file = "C:\\Users\\TrevorWhite\\Downloads\\2016battingdata.csv")
-write.csv(startdf, file = "C:\\Users\\TrevorWhite\\Downloads\\2016starters.csv")
-write.csv(rpdf, file = "C:\\Users\\TrevorWhite\\Downloads\\2016relieverdata.csv")
-write.csv(spdf, file = "C:\\Users\\TrevorWhite\\Downloads\\2016starterdata.csv")
-write.csv(odf, file = "C:\\Users\\TrevorWhite\\Downloads\\2016gamedata.csv")
+write.csv(baseball, file = file.path(processed_dir, "years_baseball.csv"))
+write.csv(baseballcorr, file = file.path(metrics_dir, "baseball_correlations.csv"))
+write.csv(df, file = file.path(interim_dir, "team_batting_rolling.csv"))
+write.csv(startdf, file = file.path(raw_dir, "mlb_probable_starters.csv"))
+write.csv(rpdf, file = file.path(interim_dir, "team_relief_pitching_rolling.csv"))
+write.csv(spdf, file = file.path(interim_dir, "team_starting_pitching_rolling.csv"))
+write.csv(odf, file = file.path(raw_dir, "mlb_game_schedule.csv"))
 
 
-gamedata <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\gamedata.csv")
-baseball <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\Baseball.csv")
-battingdata <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\battingdata.csv")
-starterdata <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\starterdata.csv")
-starters <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\starters.csv")
-relieverdata <- read.csv("C:\\Users\\TrevorWhite\\Downloads\\relieverdata.csv")
+gamedata <- read.csv(file.path(raw_dir, "mlb_game_schedule.csv"))
+baseball <- read.csv(file.path(processed_dir, "years_baseball.csv"))
+battingdata <- read.csv(file.path(interim_dir, "team_batting_rolling.csv"))
+starterdata <- read.csv(file.path(interim_dir, "team_starting_pitching_rolling.csv"))
+starters <- read.csv(file.path(raw_dir, "mlb_probable_starters.csv"))
+relieverdata <- read.csv(file.path(interim_dir, "team_relief_pitching_rolling.csv"))
 
 
 
