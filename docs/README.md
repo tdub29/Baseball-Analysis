@@ -1,6 +1,6 @@
 # Documentation
 
-This folder contains project-specific documentation to keep the analysis reproducible and collaborator-friendly.
+This folder contains project-specific documentation such as data dictionaries, feature notes, and modeling assumptions.
 
 ## What to keep here
 - **Data dictionary:** field definitions for `data/processed/years_baseball.csv` (stat names, units, grain).

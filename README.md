@@ -1,6 +1,6 @@
 # Baseball Analysis
 
-A production-ready, reproducible data science workspace for exploring MLB game outcomes and building team-level run expectancy and win-probability signals from daily batting and pitching data.
+Workspace for exploring MLB game outcomes and building team-level run expectancy and win-probability signals from daily batting and pitching data.
 
 This repository captures the full lifecycle of the project: **data ingestion** (MLB schedules and daily Baseball Reference stats), **feature engineering** (rolling team-level aggregates and advanced metrics), **modeling** (expected score regressions), **evaluation** (correlation + win-rate analysis), and **deployment artifacts** (model coefficients and scoring outputs).
 
@@ -9,12 +9,12 @@ This repository captures the full lifecycle of the project: **data ingestion** (
 - Measure which short-term stat windows are predictive of runs scored.
 - Translate expected score signals into win-probability features and evaluate their historical performance.
 
-## Repository layout (production-ready structure)
-Each top-level directory is purpose-built for this project and has a clear responsibility in the pipeline.
+## Repository layout
+Each top-level directory maps to a stage of the pipeline or a specific output type.
 
 | Directory | Purpose | Why it exists here |
 | --- | --- | --- |
-| `config/` | Project configuration (season ranges, lookback windows, paths). | Makes pipeline parameters explicit and versioned so runs are reproducible and auditable. |
+| `config/` | Project configuration (season ranges, lookback windows, paths). | Stores pipeline parameters in versioned YAML. |
 | `data/` | Project datasets split by lifecycle stage. | Separates raw pulls from interim transforms and final modeling tables. |
 | `docs/` | Living documentation (data dictionaries, methodology notes). | Keeps project knowledge with the code for collaboration. |
 | `models/` | Serialized model artifacts (RDS/coefficients). | Allows deployment and scoring without re-training. |
@@ -49,7 +49,7 @@ Pipeline defaults live in `config/baseball.yml`:
 - `min_plate_appearances`: data quality filter for team stats.
 - `paths`: explicit project-relative directories for outputs.
 
-Changing the config keeps parameter choices tracked in Git, which makes results reproducible and peer-reviewable.
+Changing the config keeps parameter choices tracked in Git for later comparisons.
 
 ## Getting started
 1. **Install R dependencies** used in the legacy pipeline (baseballr, dplyr, sqldf, ggplot2, rsq, tseries).
