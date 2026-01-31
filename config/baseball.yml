@@ -1,0 +1,26 @@
+project:
+  name: baseball-analysis
+  description: "MLB run expectancy and win-probability analysis using team-level rolling stats."
+
+seasons:
+  season_start: 2016
+  season_end: 2019
+
+ingestion:
+  lookback_days: 15
+  sources:
+    schedule: "baseballr::mlb_game_pks"
+    batters: "baseballr::bref_daily_batter"
+    pitchers: "baseballr::bref_daily_pitcher"
+    starters: "baseballr::mlb_probables"
+
+filters:
+  min_plate_appearances: 100
+
+paths:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  metrics_dir: "data/metrics"
+  reports_dir: "reports"
+  models_dir: "models"

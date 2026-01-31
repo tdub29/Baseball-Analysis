@@ -1,0 +1,13 @@
+.Rhistory
+.RData
+.Rproj.user/
+.Renviron
+*.Rproj
+
+# Optional large or generated artifacts
+models/
+reports/figures/
+reports/metrics/
+
+# Scratch space
+scratch/
