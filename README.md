@@ -1,3 +1,8 @@
+> **Superseded and archived.** This project has been folded into
+> [tdub29/baseball-analytics](https://github.com/tdub29/baseball-analytics). The 604-line R pipeline here was rebuilt there as
+> `research/r/mlb/{ingest,features,model,evaluate,run_season}.R` with 59 passing testthat
+> assertions, and the original is preserved at `research/r/legacy/`. Read-only from here.
+
 # Baseball Analysis
 
 Workspace for exploring MLB game outcomes and building team-level run expectancy and win-probability signals from daily batting and pitching data.
