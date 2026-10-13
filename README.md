@@ -5,70 +5,37 @@
 
 # Baseball Analysis
 
-Workspace for exploring MLB game outcomes and building team-level run expectancy and win-probability signals from daily batting and pitching data.
+An R pipeline that predicts MLB runs scored from rolling team batting and pitching stats. It pulls game schedules and daily Baseball Reference tables, builds 15-day team aggregates, fits a regression for expected runs, and checks how often a predicted edge turns into a win.
 
-This repository captures the full lifecycle of the project: **data ingestion** (MLB schedules and daily Baseball Reference stats), **feature engineering** (rolling team-level aggregates and advanced metrics), **modeling** (expected score regressions), **evaluation** (correlation + win-rate analysis), and **deployment artifacts** (model coefficients and scoring outputs).
+This was the first version. The maintained version, with Statcast data and a dbt warehouse, is in [baseball-analytics](https://github.com/tdub29/baseball-analytics).
 
-## Project goals (2023–2019 seasons)
-- Build a season-level dataset that links game outcomes to rolling offensive/defensive indicators.
-- Measure which short-term stat windows are predictive of runs scored.
-- Translate expected score signals into win-probability features and evaluate their historical performance.
+## What is in the repo
 
-## Repository layout
-Each top-level directory maps to a stage of the pipeline or a specific output type.
+- **Pipeline:** `src/legacy/projectbaseball_full_pipeline.R` (604 lines) does ingestion, feature joins, the expected-score regression, correlation analysis and win-rate analysis in one script. It uses `baseballr` for data and `lm` for the model.
+- **Modeling table:** `data/processed/years_baseball.csv` holds 5,111 games and 302 columns, with `season` values 2015, 2016 and 2017. Each row joins a game result to rolling batting, starting-pitcher and bullpen stats for both teams.
+- **Correlations:** `data/metrics/baseball_correlations.csv` is a 92-column correlation matrix that includes runs scored. The strongest single-stat correlations with runs are about 0.09 (`rpR`, `spSO_perc.1`, `rpER`), so no one rolling stat predicts a game well, which is why the script builds a combined expected-score formula.
+- **Config:** `config/baseball.yml` sets the season range (2016 to 2019), the 15-day lookback, the 100 plate-appearance filter and the data paths. Note the script itself still hardcodes its start year, so the config is documentation of intent more than a live switch.
 
-| Directory | Purpose | Why it exists here |
-| --- | --- | --- |
-| `config/` | Project configuration (season ranges, lookback windows, paths). | Stores pipeline parameters in versioned YAML. |
-| `data/` | Project datasets split by lifecycle stage. | Separates raw pulls from interim transforms and final modeling tables. |
-| `docs/` | Living documentation (data dictionaries, methodology notes). | Keeps project knowledge with the code for collaboration. |
-| `models/` | Serialized model artifacts (RDS/coefficients). | Allows deployment and scoring without re-training. |
-| `reports/` | Figures and evaluation outputs. | Centralizes visuals/metrics used in write-ups and presentations. |
-| `src/` | All pipeline code, organized by stage. | Enforces a clean separation of responsibilities. |
-| `tests/` | Automated checks and validation scripts. | Protects data integrity and future refactors. |
+## Run it
 
-### `data/` layout
-- `data/raw/`: Direct downloads (MLB schedules, daily hitter/pitcher tables, starters).
-- `data/interim/`: Intermediate rolling stats (team-level 15-day aggregates).
-- `data/processed/`: Final modeling table used in training/evaluation (`years_baseball.csv`).
-- `data/metrics/`: Correlation tables and other computed metrics (`baseball_correlations.csv`).
+Install the R packages the script loads: `baseballr`, `dplyr`, `sqldf`, `ggplot2`, `rsq`, `tseries`. From the repo root:
 
-## Code organization
-All pipeline code lives in `src/` and is structured by stage:
-- `src/ingest/` — data collection and raw dataset creation.
-- `src/features/` — feature engineering and joins.
-- `src/modeling/` — expected score models and coefficient outputs.
-- `src/evaluation/` — accuracy, correlation, and win-rate analysis.
-- `src/deployment/` — scoring helpers and artifacts for downstream use.
-- `src/legacy/` — the original end-to-end script, retained for provenance.
+```bash
+Rscript src/legacy/projectbaseball_full_pipeline.R
+```
 
-## Naming conventions (project-specific)
-- **Files:** lowercase snake_case with descriptive nouns or verbs (e.g., `team_batting_rolling.csv`, `build_expected_score_model.R`).
-- **R objects:** lowercase snake_case for data frames, verb-based for functions (e.g., `calculate_woba()`), and explicit prefixes for home/away (`home_`, `away_`).
-- **Models/outputs:** include season range and version when applicable (e.g., `expected_score_model_2016_2019.rds`).
+It writes raw pulls to `data/raw/`, rolling aggregates to `data/interim/`, the modeling table to `data/processed/` and the correlation table to `data/metrics/`. It calls live `baseballr` endpoints, so a rerun depends on those sources still serving the same data.
 
-## Configuration management
-Pipeline defaults live in `config/baseball.yml`:
-- `season_start`, `season_end`: season boundaries used in ingestion.
-- `lookback_days`: rolling window length for batter/pitcher aggregation.
-- `min_plate_appearances`: data quality filter for team stats.
-- `paths`: explicit project-relative directories for outputs.
+## Layout
 
-Changing the config keeps parameter choices tracked in Git for later comparisons.
+| Path | Contents |
+| --- | --- |
+| `config/` | `baseball.yml` |
+| `data/` | `raw/`, `interim/` (empty here), `processed/`, `metrics/` |
+| `src/legacy/` | The pipeline script |
+| `src/{ingest,features,modeling,evaluation,deployment}/` | Empty placeholders for a planned split of the script; that split happened in `baseball-analytics` |
+| `docs/`, `tests/` | Outlines only, no content or tests |
 
-## Getting started
-1. **Install R dependencies** used in the legacy pipeline (baseballr, dplyr, sqldf, ggplot2, rsq, tseries).
-2. **Review configuration:** update `config/baseball.yml` for the season range or lookback window you want to analyze.
-3. **Run the legacy pipeline** (to regenerate data end-to-end):
-   ```bash
-   Rscript src/legacy/projectbaseball_full_pipeline.R
-   ```
-4. **Inspect outputs** in `data/processed/` and `data/metrics/`.
+## Status
 
-## Documentation expectations
-See `docs/README.md` for the data dictionary outline, feature explanations (e.g., wOBA, FIP), and model assumptions to maintain consistency across collaborators.
-
-## Collaboration notes
-- Every new dataset should include a short README in its directory (source, filters, grain).
-- Keep all parameters in `config/baseball.yml` and avoid hard-coded paths.
-- Prefer scripts in `src/` over ad-hoc notebooks to ensure reproducibility.
+Archived. No tests, no data dictionary, and no license file. For current work and results, use [baseball-analytics](https://github.com/tdub29/baseball-analytics).
